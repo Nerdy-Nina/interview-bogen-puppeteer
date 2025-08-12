@@ -1,0 +1,16 @@
+{
+  "name": "interview-bogen-puppeteer",
+  "version": "1.0.0",
+  "description": "Interviewbogen mit Puppeteer PDF-Generierung",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+} 

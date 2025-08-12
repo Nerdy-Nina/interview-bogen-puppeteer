@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interviewbogen - Online Formular</title>
+    <link rel="stylesheet" href="interview-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("objdBIBt99ptpZyB1");
+        })();
+    </script>
+
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Hauptüberschrift -->
+        <header class="main-header">
+            <h1>Interviewbogen</h1>
+        </header>
+
+        <!-- Shirin Banner -->
+        <div class="shirin-banner">
+            <img src="250205_HR_Vorstellungsbanner_Active-Sourcing_Shirin.jpg" alt="Shirin Banner" class="banner-image">
+        </div>
+
+        <form id="interviewForm" class="form-container">
+            <!-- Interviewer-Auswahl -->
+            <section class="form-section">
+                <h2>Interviewer</h2>
+                <div class="form-group">
+                    <label>Wer führt das Interview?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="interviewer" value="shirin" checked> Shirin</label>
+                        <label><input type="radio" name="interviewer" value="felix"> Felix</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Allgemeine Informationen -->
+            <section class="form-section">
+                <h2>Allgemeine Informationen</h2>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position">
+                </div>
+                <div class="form-group">
+                    <label>Bereich:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="area" value="IT"> IT</label>
+                        <label><input type="radio" name="area" value="Non-IT"> Non-IT</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="vertical">Vertical:</label>
+                    <input type="text" id="vertical" name="vertical">
+                </div>
+            </section>
+
+            <!-- Standort -->
+            <section class="form-section">
+                <h2>Standort</h2>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="standort" value="MUC"> MUC</label>
+                    <label><input type="checkbox" name="standort" value="DUS"> DUS</label>
+                    <label><input type="checkbox" name="standort" value="FFM"> FFM</label>
+                    <label><input type="checkbox" name="standort" value="STGT"> STGT</label>
+                    <label><input type="checkbox" name="standort" value="HH"> HH</label>
+                    <label><input type="checkbox" name="standort" value="umzugsbereit"> umzugsbereit/offen für mehrere Standorte</label>
+                </div>
+                <div class="form-group">
+                    <label for="other_location">anderer Standort:</label>
+                    <input type="text" id="other_location" name="other_location">
+                </div>
+            </section>
+
+            <!-- Candidate Summary -->
+            <section class="form-section">
+                <h2>Candidate Summary</h2>
+                <div class="form-group">
+                    <label for="candidate_summary">Persönlicher Eindruck aus dem Gespräch (max. 700 Zeichen):</label>
+                    <textarea id="candidate_summary" name="candidate_summary" rows="6" maxlength="700"></textarea>
+                    <span class="char-counter"><span id="summary_counter">0</span>/700</span>
+                </div>
+            </section>
+
+            <!-- Rahmenbedingungen -->
+            <section class="form-section">
+                <h2>Rahmenbedingungen</h2>
+                <div class="form-group">
+                    <label for="availability">Verfügbarkeit:</label>
+                    <input type="date" id="availability" name="availability">
+                </div>
+                <div class="form-group">
+                    <label for="notice_period">Kündigungsfrist:</label>
+                    <input type="text" id="notice_period" name="notice_period">
+                </div>
+                <div class="form-group">
+                    <label for="current_salary">Aktuelles Gehalt (All-In):</label>
+                    <input type="text" id="current_salary" name="current_salary" placeholder="z.B. 50.000 €">
+                </div>
+                <div class="form-group">
+                    <label for="desired_salary">Wunschgehalt (All-In):</label>
+                    <input type="text" id="desired_salary" name="desired_salary" placeholder="z.B. 60.000 €">
+                </div>
+            </section>
+
+            <!-- Besprochene Inhalte im HR-Interview -->
+            <section class="form-section">
+                <h2>Besprochene Inhalte im HR-Interview</h2>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="hr_content" value="Urlaubstage"> Urlaubstage</label>
+                    <label><input type="checkbox" name="hr_content" value="Wöchentliche Arbeitszeit 40h/Wo"> Wöchentliche Arbeitszeit 40h/Wo</label>
+                    <label><input type="checkbox" name="hr_content" value="Vertrauensarbeitszeit"> Vertrauensarbeitszeit (kein Gleitzeitkonto)</label>
+                    <label><input type="checkbox" name="hr_content" value="Kernarbeitszeit/Schichtmodell"> Kernarbeitszeit/Schichtmodell</label>
+                    <label><input type="checkbox" name="hr_content" value="Mobiles Arbeiten / HO Regelung"> Mobiles Arbeiten / HO Regelung</label>
+                </div>
+                <div class="form-group">
+                    <label for="benefits">Benefits (welche wurden vorgestellt?):</label>
+                    <input type="text" id="benefits" name="benefits">
+                </div>
+            </section>
+
+            <!-- Fachliche Qualifikation -->
+            <section class="form-section">
+                <h2>Fachliche Qualifikation</h2>
+                <div class="form-group">
+                    <label for="top_skills">Top Skills:</label>
+                    <textarea id="top_skills" name="top_skills" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="certifications">Abschluss/Zertifizierungen:</label>
+                    <textarea id="certifications" name="certifications" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="industry_experience">Branchenerfahrung:</label>
+                    <textarea id="industry_experience" name="industry_experience" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tools_software">Tools & Software:</label>
+                    <textarea id="tools_software" name="tools_software" rows="3"></textarea>
+                </div>
+            </section>
+
+            <!-- Fachfragen an den Kandidaten (jetzt Freitextfeld) -->
+            <section class="form-section">
+                <h2>Fachfragen an den Kandidaten</h2>
+                <div class="form-group">
+                    <label for="technical_questions">Fachfragen an den Kandidaten (Freitext):</label>
+                    <textarea id="technical_questions" name="technical_questions" rows="5"></textarea>
+                </div>
+            </section>
+
+            <!-- Sprachkenntnisse -->
+            <section class="form-section" id="language-section" style="display: none;">
+                <h2>Sprachkenntnisse</h2>
+                <div class="form-group">
+                    <label for="german_level">Deutschkenntnisse:</label>
+                    <select id="german_level" name="german_level">
+                        <option value="">Bitte wählen</option>
+                        <option value="Grundkenntnisse">Grundkenntnisse</option>
+                        <option value="Mittel">Mittel</option>
+                        <option value="Fließend">Fließend</option>
+                        <option value="Verhandlungssicher">Verhandlungssicher</option>
+                        <option value="Muttersprache">Muttersprache</option>
+                    </select>
+                </div>
+                <div class="form-group radio-group">
+                    <label>Im TI überprüft:</label>
+                    <label><input type="radio" name="german_ti_checked" value="Ja"> Ja</label>
+                    <label><input type="radio" name="german_ti_checked" value="Nein"> Nein</label>
+                </div>
+
+                <div class="form-group" id="english-section">
+                    <label for="english_level">Englischkenntnisse:</label>
+                    <select id="english_level" name="english_level">
+                        <option value="">Bitte wählen</option>
+                        <option value="Grundkenntnisse">Grundkenntnisse</option>
+                        <option value="Mittel">Mittel</option>
+                        <option value="Fließend">Fließend</option>
+                        <option value="Verhandlungssicher">Verhandlungssicher</option>
+                        <option value="Muttersprache">Muttersprache</option>
+                    </select>
+                </div>
+                <div class="form-group radio-group" id="english-ti-section">
+                    <label>Im TI überprüft:</label>
+                    <label><input type="radio" name="english_ti_checked" value="Ja"> Ja</label>
+                    <label><input type="radio" name="english_ti_checked" value="Nein"> Nein</label>
+                </div>
+            </section>
+
+            <!-- IT-Sprache -->
+            <section class="form-section" id="it-language-section" style="display: none;">
+                <h2>IT-Sprache</h2>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="it_language_type" value="Frontend"> Frontend:</label>
+                    <input type="text" name="frontend_details" placeholder="Details zu Frontend-Kenntnissen">
+                </div>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="it_language_type" value="Backend"> Backend:</label>
+                    <input type="text" name="backend_details" placeholder="Details zu Backend-Kenntnissen">
+                </div>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="it_language_type" value="FullStack"> FullStack:</label>
+                    <input type="text" name="fullstack_details" placeholder="Details zu FullStack-Kenntnissen">
+                </div>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" name="it_language_type" value="Sonstiges"> Sonstiges:</label>
+                    <input type="text" name="other_it_details" placeholder="Andere IT-Sprachen/Technologien">
+                </div>
+            </section>
+
+            <!-- Hinweisbox -->
+            <section class="form-section info-box">
+                <h2>Wichtige Infos zum Active Sourcing</h2>
+                <ul>
+                    <li>Schnelligkeit zählt: Rückmeldung in 24–48h</li>
+                    <li>Persönlicher & wertschätzender Kontakt</li>
+                    <li>USP klar kommunizieren</li>
+                    <li>Flexibler Prozess statt Standard-Interview</li>
+                    <li>Kandidat ist nicht aktiv auf Jobsuche – wir müssen überzeugen!</li>
+                </ul>
+            </section>
+
+            <!-- Abschluss -->
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Interviewbogen absenden</button>
+            </div>
+
+            <div id="successMessage" class="success-message" style="display: none;">
+                Vielen Dank, der Interviewbogen wurde erfolgreich übermittelt.
+            </div>
+        </form>
+    </div>
+
+    <script src="interview-script.js"></script>
+</body>
+</html> 
